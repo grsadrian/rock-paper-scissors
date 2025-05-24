@@ -1,7 +1,7 @@
 # Rock, paper, scissors 🪨📜✂️
 
 ## About 📝
-- This is the first JavaScript project in The Odin Project Foundations course.
+- This is the first JavaScript project in [The Odin Project Foundations course](https://www.theodinproject.com/paths/foundations/courses/foundations).
 ### How does it work ? 🧐
 - It simulates a 5-round game of rock, paper, scissors. The computer randomly chooses one of the 3 options, while you choose from an input one of the options.
 - After the choices are made, comparisons will be made between the chosen options and the winner of the round will be determined based on the original game rules. The winner will be displayed on the console, and the players' scores will increase based on the winner.
