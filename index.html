@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, paper, scissors !</title>
 </head>
+
 <body>
+    <main>
+        <h1>Rock, paper & scissors</h1>
+        <menu>
+            <ul>
+                <li class="choice" id="rock"><img src="./assets/icons/rock.svg" alt="Rock" width="50" height="50"></li>
+                <li class="choice" id="paper"><img src="./assets/icons/paper.svg" alt="Paper" width="50" height="50"></li>
+                <li class="choice" id="scissors"><img src="./assets/icons/scissors.svg" alt="Scissor" width="50" height="50"></li>
+            </ul>
+        </menu>
+        <div id="results">
+            <p id="human-choice"></p>
+            <p id="computer-choice"></p>
+            <p id="result"></p>
+        </div>
+        <div id="pontuation">
+            <div class="pontuation-players-container">
+                <p>Player</p>
+                <p id="player-pontuation"></p>
+            </div>
+            <div class="pontuation-players-container">
+                <p>Computer</p>
+                <p id="computer-pontuation"></p>
+            </div>
+        </div>
+    </main>
     <script src="app.js"></script>
 </body>
+
 </html>

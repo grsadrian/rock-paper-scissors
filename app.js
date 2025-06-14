@@ -11,7 +11,7 @@ function getComputerChoice() {
 
 function getHumanChoice() {
   // Get a human string choice and convert to a number
-  let choice = prompt("rock, paper or scissor: ").toUpperCase();
+  // let choice = prompt("rock, paper or scissor: ").toUpperCase();
   if (choice === "ROCK") {
     choice = 1;
     return choice;
