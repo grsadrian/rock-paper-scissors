@@ -1,4 +1,15 @@
 const menu = document.querySelector("#menu");
+const humanChoiceDisplay = document.querySelector("#human-choice");
+const computerChoiceDisplay = document.querySelector("#computer-choice");
+const resultDisplay = document.querySelector("#result");
+const playButton = document.querySelector("button");
+const gameDisplay = document.querySelector("main");
+const pontuationScoreDisplay = document.querySelector("#pontuation");
+const playerScoreDisplay = document.querySelector("#player-pontuation");
+const computerScoreDisplay = document.querySelector("#computer-pontuation");
+let humanScore = 0;
+let computerScore = 0;
+let roundsCount = 0;
 
 function getComputerChoice() {
   // Give a random choice for the computer and return a string
@@ -11,16 +22,11 @@ function getComputerChoice() {
   return "scissor";
 }
 
-function getHumanChoice(event) {
-  // Get a human choice and convert to a number
-  let choice = event.target.classList[0];
-  return choice;
-}
-
-menu.addEventListener("click", getHumanChoice);
-
 function playRound(computerChoice, humanChoice) {
-  // Transform the computer selection string to a number
+  humanChoiceDisplay.innerText = `YOUR CHOICE: ${humanChoice}`;
+  computerChoiceDisplay.innerText = `COMPUTER CHOICE: ${computerChoice}`;
+
+  // Transform the computer choice string to a number
   let computerChoiceNum;
   switch (computerChoice) {
     case "rock":
@@ -33,7 +39,7 @@ function playRound(computerChoice, humanChoice) {
       computerChoiceNum = 3;
   }
 
-  // Revert the human selection to a string
+  // Revert the human choice string to a number
   let humanChoiceNum;
   switch (humanChoice) {
     case "rock":
@@ -46,33 +52,38 @@ function playRound(computerChoice, humanChoice) {
       humanChoiceNum = 3;
   }
 
-  // Compare the computer selection & human selection to determine a winner
+  // Compare the computer choice & human choice to determine a winner
   if (
     (computerChoiceNum == 1 && humanChoiceNum == 3) ||
     (computerChoiceNum == 2 && humanChoiceNum == 1) ||
     (computerChoiceNum == 3 && humanChoiceNum == 2)
   ) {
-    console.log(`You lose ! ${computerChoice} beats ${humanChoice}`);
+    resultDisplay.textContent = `You lose ! ${computerChoice} beats ${humanChoice}`;
     computerScore++;
   } else if (computerChoiceNum == humanChoiceNum) {
-    console.log("It's a tie");
+    resultDisplay.textContent = "It's a tie";
   } else {
-    console.log(`You Win ! ${humanChoice} beats ${computerChoice}`);
+    resultDisplay.textContent = `You Win ! ${humanChoice} beats ${computerChoice}`;
     humanScore++;
   }
 }
 
-// // Loop for a 5 times play
-// function playGame() {
-//   for (let i = 0; i < 5; i++) {
-//     const computerSelection = getComputerChoice();
-//     const humanSelection = getHumanChoice();
-//     playRound(computerSelection, humanSelection);
-//   }
-// }
+function playGame(event) {
+  roundsCount++;
+  const computerSelection = getComputerChoice();
+  const humanSelection = event.target.classList[0];
+  playRound(computerSelection, humanSelection);
+  playerScoreDisplay.innerText = humanScore;
+  computerScoreDisplay.innerText = computerScore;
+  if (roundsCount > 5) {
+    alert("End of game");
+    gameDisplay.style.display = "none";
+  }
+}
 
-// let humanScore = 0;
-// let computerScore = 0;
-// playGame();
-// console.log(`Human Score: ${humanScore}`);
-// console.log(`Computer Score: ${computerScore}`);
+playButton.addEventListener("click", () => {
+  gameDisplay.style.display = "flex";
+  pontuationScoreDisplay.style.display = "flex";
+});
+
+menu.addEventListener("click", playGame);
