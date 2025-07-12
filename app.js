@@ -78,12 +78,22 @@ function playGame(event) {
   if (roundsCount > 5) {
     alert("End of game");
     gameDisplay.style.display = "none";
+    playButton.style.display = "block";
+    resultDisplay.innerText = "";
+    humanChoiceDisplay.innerText = "";
+    computerChoiceDisplay.innerText = "";
+    roundsCount = 0;
   }
 }
 
 playButton.addEventListener("click", () => {
   gameDisplay.style.display = "flex";
   pontuationScoreDisplay.style.display = "flex";
+  playButton.style.display = "none";
+  humanScore = 0;
+  computerScore = 0;
+  playerScoreDisplay.innerText = humanScore;
+  computerScoreDisplay.innerText = computerScore;
 });
 
 menu.addEventListener("click", playGame);
