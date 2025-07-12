@@ -1,72 +1,99 @@
+const menu = document.querySelector("#menu");
+const humanChoiceDisplay = document.querySelector("#human-choice");
+const computerChoiceDisplay = document.querySelector("#computer-choice");
+const resultDisplay = document.querySelector("#result");
+const playButton = document.querySelector("button");
+const gameDisplay = document.querySelector("main");
+const pontuationScoreDisplay = document.querySelector("#pontuation");
+const playerScoreDisplay = document.querySelector("#player-pontuation");
+const computerScoreDisplay = document.querySelector("#computer-pontuation");
+let humanScore = 0;
+let computerScore = 0;
+let roundsCount = 0;
+
 function getComputerChoice() {
   // Give a random choice for the computer and return a string
   const choice = (Math.random() * 3).toFixed(0);
   if (choice <= 1) {
-    return "Rock";
+    return "rock";
   } else if (choice == 2) {
-    return "Paper";
+    return "paper";
   }
-  return "Scissor";
-}
-
-function getHumanChoice() {
-  // Get a human string choice and convert to a number
-  let choice = prompt("rock, paper or scissor: ").toUpperCase();
-  if (choice === "ROCK") {
-    choice = 1;
-    return choice;
-  } else if (choice === "PAPER") {
-    choice = 2;
-    return choice;
-  }
-  choice = 3;
-  return choice;
+  return "scissor";
 }
 
 function playRound(computerChoice, humanChoice) {
-  // Transform the computer selection string to a number
-  let computerSelection = 3;
-  if (computerChoice === "Rock") {
-    computerSelection = 1;
-  } else if (computerChoice === "Paper") {
-    computerSelection = 2;
+  humanChoiceDisplay.innerText = `YOUR CHOICE: ${humanChoice}`;
+  computerChoiceDisplay.innerText = `COMPUTER CHOICE: ${computerChoice}`;
+
+  // Transform the computer choice string to a number
+  let computerChoiceNum;
+  switch (computerChoice) {
+    case "rock":
+      computerChoiceNum = 1;
+      break;
+    case "paper":
+      computerChoiceNum = 2;
+      break;
+    default:
+      computerChoiceNum = 3;
   }
 
-  // Revert the human selection to a string
-  let humanSelection = "Scissor";
-  if (humanChoice === 1) {
-    humanSelection = "Rock";
-  } else if (humanChoice === 2) {
-    humanSelection = "Paper";
+  // Revert the human choice string to a number
+  let humanChoiceNum;
+  switch (humanChoice) {
+    case "rock":
+      humanChoiceNum = 1;
+      break;
+    case "paper":
+      humanChoiceNum = 2;
+      break;
+    default:
+      humanChoiceNum = 3;
   }
 
-  // Compare the computer selection & human selection to determine a winner
+  // Compare the computer choice & human choice to determine a winner
   if (
-    (computerSelection == 1 && humanChoice == 3) ||
-    (computerSelection == 2 && humanChoice == 1) ||
-    (computerSelection == 3 && humanChoice == 2)
+    (computerChoiceNum == 1 && humanChoiceNum == 3) ||
+    (computerChoiceNum == 2 && humanChoiceNum == 1) ||
+    (computerChoiceNum == 3 && humanChoiceNum == 2)
   ) {
-    console.log(`You lose ! ${computerChoice} beats ${humanSelection}`);
+    resultDisplay.textContent = `You lose ! ${computerChoice} beats ${humanChoice}`;
     computerScore++;
-  } else if (computerSelection == humanChoice) {
-    console.log("It's a tie");
+  } else if (computerChoiceNum == humanChoiceNum) {
+    resultDisplay.textContent = "It's a tie";
   } else {
-    console.log(`You Win ! ${humanSelection} beats ${computerChoice}`);
+    resultDisplay.textContent = `You Win ! ${humanChoice} beats ${computerChoice}`;
     humanScore++;
   }
 }
 
-// Loop for a 5 times play
-function playGame() {
-  for (let i = 0; i < 5; i++) {
-    const computerSelection = getComputerChoice();
-    const humanSelection = getHumanChoice();
-    playRound(computerSelection, humanSelection);
+function playGame(event) {
+  roundsCount++;
+  const computerSelection = getComputerChoice();
+  const humanSelection = event.target.classList[0];
+  playRound(computerSelection, humanSelection);
+  playerScoreDisplay.innerText = humanScore;
+  computerScoreDisplay.innerText = computerScore;
+  if (roundsCount > 5) {
+    alert("End of game");
+    gameDisplay.style.display = "none";
+    playButton.style.display = "block";
+    resultDisplay.innerText = "";
+    humanChoiceDisplay.innerText = "";
+    computerChoiceDisplay.innerText = "";
+    roundsCount = 0;
   }
 }
 
-let humanScore = 0;
-let computerScore = 0;
-playGame();
-console.log(`Human Score: ${humanScore}`);
-console.log(`Computer Score: ${computerScore}`);
+playButton.addEventListener("click", () => {
+  gameDisplay.style.display = "flex";
+  pontuationScoreDisplay.style.display = "flex";
+  playButton.style.display = "none";
+  humanScore = 0;
+  computerScore = 0;
+  playerScoreDisplay.innerText = humanScore;
+  computerScoreDisplay.innerText = computerScore;
+});
+
+menu.addEventListener("click", playGame);
